@@ -15,7 +15,7 @@ const Resume: React.FC = () => {
           <p>2023 - Present</p>
           <ul>
             <li>Created a tool to move data between Jira and ALM Octane!</li>
-            <li>Inventory management of 3000+ lab devices (If spectrum was cool like that I'd have a live tracker)</li>
+            <li>Inventory management of 3000+ lab devices (If Spectrum was cool like that I'd have a live tracker)</li>
           </ul>
         </div>
       </section>
@@ -32,6 +32,17 @@ const Resume: React.FC = () => {
           <li>{"Grabbing IPs >:)"}</li>
           <li>Your cooridinates are TODO: server stuff</li>
         </ul>
+      </section>
+      <section>
+        <h2>TODO for this website</h2>
+        <ol>
+            <li>Migrate from AWS App Runner to ECS for future improvements</li>
+            <li>automatically waste money by automating deployments</li>
+            <li>Display private projects securely idealy have a cloudlfare human check, spin up a container, allow a user to expirence the awesome software</li>
+            <li>create todo app</li>
+            <li>learn VIM to become a real software engineer</li>
+            <li>gaslighting</li>
+        </ol>
       </section>
     </div>
   );
