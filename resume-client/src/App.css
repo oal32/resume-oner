@@ -1,0 +1,19 @@
+.resume {
+  font-family: sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+
+.section {
+  margin-bottom: 20px;
+}
+
+.entry {
+  margin-bottom: 10px;
+}
