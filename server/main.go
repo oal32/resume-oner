@@ -16,11 +16,17 @@ func LoggingMiddleware(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 }
+
+func healthCheck(w http.ResponseWriter, req *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("pong"))
+}
+
 func main() {
 
 	fs := http.FileServer(http.Dir("../resume-client/dist"))
 	http.Handle("/", LoggingMiddleware(fs))
-
+	http.HandleFunc("/ping", healthCheck)
 	log.Println("Listening on :8080...")
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {

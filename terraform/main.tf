@@ -105,6 +105,16 @@ resource "aws_lb_target_group" "main" {
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
   target_type = "instance"
+
+  health_check {
+    enabled             = true
+    path                = "/ping"
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    timeout             = 5
+    interval            = 30
+    matcher             = "200-299"
+  }
 }
 
 resource "aws_lb_listener" "http" {
@@ -200,6 +210,9 @@ resource "aws_ecs_capacity_provider" "main" {
       target_capacity           = 1
     }
   }
+depends_on = [
+    aws_internet_gateway.main
+  ]
 }
 
 resource "aws_ecs_cluster_capacity_providers" "main" {
