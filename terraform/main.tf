@@ -105,6 +105,7 @@ resource "aws_lb_target_group" "main" {
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
   target_type = "instance"
+  deregistration_delay = 10
 
   health_check {
     enabled             = true
