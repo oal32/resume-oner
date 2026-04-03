@@ -20,7 +20,7 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/resume/resume-oner:SHORT_SHA'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/resume/resume-oner:$SHORT_SHA'
       - '.'
     dir: '.'
 
