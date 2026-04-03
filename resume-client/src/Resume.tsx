@@ -2,6 +2,10 @@ import React from 'react';
 import './App.css';
 
 const Resume: React.FC = () => {
+    const AlwaysChecked = <input 
+        type="checkbox" 
+        checked={true} 
+      /> 
   return (
     <div className="resume">
       <header className="header">
@@ -68,12 +72,12 @@ const Resume: React.FC = () => {
       <section>
         <h2>TODO for this website</h2>
         <ol>
-            <li><s>Migrate from AWS App Runner to ECS for future improvements</s> &check;Use Google app runner</li>
-            <li>✓ Automatically waste money by automating deployments</li>
+            <li><s>Migrate from AWS App Runner to ECS for future improvements</s> {AlwaysChecked} Use Google app runner</li>
+            <li>{AlwaysChecked} Automatically waste money by automating deployments</li>
             <li>Create a markdown editor and use Google's postgres to dip my toes in</li>
             <li>Create a markdown editor and use Google's document database to see what the nosql fuss is about</li>
             <li>Display private projects securely idealy have a cloudlfare human check, spin up a container, allow a user to expirence the awesome software</li>
-            <li>create todo app</li>
+            <li>create todo app (If you think hard enough I've made a really bad one that requires a Google Cloud Build job to mark something done 🤔</li>
         </ol>
       </section>
     </div>
