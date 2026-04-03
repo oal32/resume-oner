@@ -20,7 +20,7 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/resume-oner/resume-oner:latest'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/resume/resume-oner:SHORT_SHA'
       - '.'
     dir: '.'
 
@@ -29,7 +29,7 @@ steps:
     args:
       [
         'push',
-        'us-central1-docker.pkg.dev/$PROJECT_ID/resume-oner/resume-oner:latest',
+        'us-central1-docker.pkg.dev/$PROJECT_ID/resume/resume-oner:$SHORT_SHA',
       ]
 
   # Deploy the container image to Cloud Run
@@ -40,13 +40,13 @@ steps:
       - 'deploy'
       - 'resume-oner'
       - '--image'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/resume-oner/resume-oner:latest'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/resume/resume-oner:$SHORT_SHA'
       - '--region'
       - 'us-central1'
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
 images:
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/resume-oner/resume-oner:latest'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/resume/resume-oner:$SHORT_SHA'
 options:
   logging: CLOUD_LOGGING_ONLY
