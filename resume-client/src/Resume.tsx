@@ -6,7 +6,7 @@ const Resume: React.FC = () => {
     <div className="resume">
       <header className="header">
         <h1>Ian Armstrong</h1>
-        <p>Software Engineer</p>
+        <p>Software Engineer II</p>
       </header>
       <section className="section">
         <h2>Work Experience</h2>
@@ -68,7 +68,7 @@ const Resume: React.FC = () => {
       <section>
         <h2>TODO for this website</h2>
         <ol>
-            <li>Migrate from AWS App Runner to ECS for future improvements</li>
+            <li><s>Migrate from AWS App Runner to ECS for future improvements</s> Use Google app runner</li>
             <li>Automatically waste money by automating deployments</li>
             <li>Display private projects securely idealy have a cloudlfare human check, spin up a container, allow a user to expirence the awesome software</li>
             <li>create todo app</li>
