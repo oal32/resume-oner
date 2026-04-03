@@ -1,0 +1,52 @@
+steps:
+  # Build the Go server
+  - name: 'golang:1.22'
+    entrypoint: 'go'
+    args: ['build', '-o', 'resume-server', 'server/main.go']
+    dir: '.'
+
+  # Build the React client
+  - name: 'node:20'
+    entrypoint: 'npm'
+    args: ['install']
+    dir: 'resume-client'
+  - name: 'node:20'
+    entrypoint: 'npm'
+    args: ['run', 'build']
+    dir: 'resume-client'
+
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/resume-oner/resume-oner:latest'
+      - '.'
+    dir: '.'
+
+  # Push the container image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'us-central1-docker.pkg.dev/$PROJECT_ID/resume-oner/resume-oner:latest',
+      ]
+
+  # Deploy the container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'resume-oner'
+      - '--image'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/resume-oner/resume-oner:latest'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/resume-oner/resume-oner:latest'
+options:
+  logging: CLOUD_LOGGING_ONLY
