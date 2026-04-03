@@ -69,7 +69,7 @@ const Resume: React.FC = () => {
         <h2>TODO for this website</h2>
         <ol>
             <li><s>Migrate from AWS App Runner to ECS for future improvements</s> &check;Use Google app runner</li>
-            <li>&check; Automatically waste money by automating deployments</li>
+            <li>✓ Automatically waste money by automating deployments</li>
             <li>Create a markdown editor and use Google's postgres to dip my toes in</li>
             <li>Create a markdown editor and use Google's document database to see what the nosql fuss is about</li>
             <li>Display private projects securely idealy have a cloudlfare human check, spin up a container, allow a user to expirence the awesome software</li>
