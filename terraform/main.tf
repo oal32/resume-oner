@@ -1,5 +1,6 @@
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
+  assign_generated_ipv6_cidr_block = true
 }
 
 resource "aws_cloudwatch_log_group" "main" {
@@ -10,6 +11,8 @@ resource "aws_cloudwatch_log_group" "main" {
 resource "aws_subnet" "main" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.1.0/24"
+  ipv6_cidr_block   = cidrsubnet(aws_vpc.main.ipv6_cidr_block, 8, 1)
+  assign_ipv6_address_on_creation = true
   availability_zone = "us-east-2a"
 
   tags = {
@@ -20,6 +23,8 @@ resource "aws_subnet" "main" {
 resource "aws_subnet" "secondary" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.2.0/24"
+  ipv6_cidr_block   = cidrsubnet(aws_vpc.main.ipv6_cidr_block, 8, 2)
+  assign_ipv6_address_on_creation = true
   availability_zone = "us-east-2b"
 
   tags = {
@@ -38,6 +43,7 @@ resource "aws_security_group" "lb" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   egress {
@@ -45,6 +51,7 @@ resource "aws_security_group" "lb" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 }
 
@@ -59,6 +66,7 @@ resource "aws_security_group" "lb-https" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   egress {
@@ -66,6 +74,7 @@ resource "aws_security_group" "lb-https" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 }
 resource "aws_security_group" "ecs_tasks" {
@@ -86,6 +95,7 @@ resource "aws_security_group" "ecs_tasks" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 }
 
@@ -95,6 +105,7 @@ resource "aws_lb" "main" {
   name               = "${var.app_name}-lb"
   internal           = false
   load_balancer_type = "application"
+  ip_address_type    = "dualstack"
   security_groups    = [aws_security_group.lb.id, aws_security_group.lb-https.id]
   subnets            = [aws_subnet.main.id, aws_subnet.secondary.id]
 }
@@ -195,7 +206,12 @@ resource "aws_ecs_service" "main" {
     container_port   = 8080
   }
 
-  depends_on = [aws_lb_listener.http]
+  depends_on = [
+    aws_lb_listener.http,
+    aws_iam_role_policy_attachment.ecs_instance_role_policy,
+    aws_route_table_association.main,
+    aws_route_table_association.secondary
+  ]
 }
 
 resource "aws_ecs_capacity_provider" "main" {
@@ -261,7 +277,8 @@ resource "aws_launch_template" "main" {
   }
 
   network_interfaces {
-    associate_public_ip_address = true
+    associate_public_ip_address = false
+    ipv6_address_count          = 1
     security_groups             = [aws_security_group.ecs_tasks.id]
   }
 
@@ -341,6 +358,11 @@ resource "aws_route_table" "main" {
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.main.id
+  }
+
+  route {
+    ipv6_cidr_block = "::/0"
+    gateway_id      = aws_internet_gateway.main.id
   }
 }
 
