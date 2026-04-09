@@ -38,6 +38,16 @@ const Resume: React.FC = () => {
             <li>Stood up a Rancher Kubernetes environment for application hosting and pipelines using GitLab agents</li>
             <li>Championed and documented project development standards, incorporating input from stakeholders to implement process refinements that streamlined development workflows and improved multi-team alignment.</li>
           </ul>
+          <h4>Device Project (Lead Engineer Python, React JS)</h4>
+          <p>A device management platform integrating internal testing tools.</p>
+          <ul>
+            <li>Engineered automated test suites to enforce and maintain high code quality standards.</li>
+            <li>Unified the Charter Lab inventory, effectively managing over 5,000 client devices including routers, modems, and ONUs.</li>
+            <li>Facilitated seamless test execution across video, internet, and voice devices, developing intuitive UI components for enhanced user experience.</li>
+            <li>Iterated on product features by actively incorporating feedback from development teams and customers, driving continuous improvement.</li>
+            <li>Conducted comprehensive performance investigations and load testing, significantly reducing time-per-device metrics.</li>
+            <li>Architected scalable APIs to aggregate critical device health metrics from Headends, CMTSs, Switches, and various internal web service tools.</li>
+          </ul>
         </div>
         <div className="entry">
           <h3>Test Automation Intern at Charter Communications</h3>
