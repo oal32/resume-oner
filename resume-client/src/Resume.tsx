@@ -16,7 +16,7 @@ const Resume: React.FC = () => {
         <h2>Work Experience</h2>
         <div className="entry">
           <h3>Software Engineer at Charter Communications</h3>
-          <p>May 2023 - Present | Charlotte, NC</p>
+          <p>May 2023 - Sept 2026 | Charlotte, NC</p>
           <h4>Bridgeworks (Lead Engineer Python, React JS)</h4>
           <ul>
             <li>Led the development of a synchronization tool (Jira/Octane) central to change management, enabling clear task tracking and status visibility for all engineering and testing stakeholders.</li>
